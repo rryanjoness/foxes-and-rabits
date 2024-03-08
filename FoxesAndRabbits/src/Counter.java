@@ -43,7 +43,7 @@ public class Counter
     }
 
     /**
-     * Increment the current count by one.
+     * Increment the current count (number of steps) by one.
      */
     public void increment()
     {

@@ -9,7 +9,7 @@ public class Zombie extends Animal {
     // Zombies do not breed, they infect. Thus, breeding age is set to 0.
     private static final int BREEDING_AGE = 0;
     // The age to which a Zombie can live, they do not die, but eventually decompose.
-    private static final int MAX_AGE = 2147483647;
+    private static final int MAX_AGE = 50;
     // Zombies will always successfully infect prey.
     private static final double BREEDING_PROBABILITY = 1;
     // Zombies can infect one animal at a time.
@@ -30,12 +30,12 @@ public class Zombie extends Animal {
      * @param field The field currently occupied.
      * @param newFoxes A list to return newly born foxes.
      */
-    public void act(){
+    public void act(List<Animal> newZombies){
+        incrementAge();
         Location brains = findBrains();
         if(brains != null){
-            infect(brains);
+            newZombies.add(infect(brains));
         }
-
 
         Location newLocation =  getField().freeAdjacentLocation(getLocation());
         //check if zombie is able to move yet
@@ -60,12 +60,13 @@ public class Zombie extends Animal {
     private Location findBrains()
     {
         Field field = getField();
+        if(field != null){
         List<Location> adjacent = field.adjacentLocations(getLocation());
         Iterator<Location> it = adjacent.iterator();
-        while(it.hasNext()) {
+          while(it.hasNext()) {
             Location where = it.next();
             Object animal = field.getObjectAt(where);
-            if(animal != null) {
+            if(animal instanceof Fox || animal instanceof Rabbit) {
                 Animal prey = (Animal) animal;
                 if(prey.isAlive()) { 
                     prey.setDead();
@@ -73,6 +74,7 @@ public class Zombie extends Animal {
                     return where;
                 }
             }
+          }
         }
         return null;
     }
@@ -81,6 +83,38 @@ public class Zombie extends Animal {
         Field field = getField();
         Zombie infected = new Zombie(field, where);
         return infected;
+    }
+
+    /**
+     *  Return the breeding age of this zombie. 
+     *  @return The breeding age of this zombie.
+     */
+    protected int getBreedingAge(){
+        return BREEDING_AGE;
+    }
+
+        /**
+     * Return the max age of this zombie
+     * @return int the max age of this zombie
+     */
+    protected int getMaxAge(){
+        return MAX_AGE;
+    }
+
+        /**
+     * Return the breeding probabilty for this zombie
+     * @return the breeding probabilty for this zombie
+     */
+    protected double getBreedingProbability(){
+        return BREEDING_PROBABILITY;
+    }
+
+    /**
+     * Return the max litter size for this zombie
+     * @return The max litter size for this zombie
+     */
+    protected int getMaxLitterSize(){
+        return MAX_LITTER_SIZE;
     }
     
 

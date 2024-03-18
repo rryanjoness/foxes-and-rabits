@@ -22,6 +22,8 @@ public class Simulator
     private static final double FOX_CREATION_PROBABILITY = 0.02;
     // The probability that a rabbit will be created in any given grid position.
     private static final double RABBIT_CREATION_PROBABILITY = 0.08;    
+    // The probability that a zombie will be created in any given grid position.
+    private static final double ZOMBIE_CREATION_PROBABILITY = 0.001;
 
     // List of animals in the field.
     private List<Animal> animals;
@@ -61,6 +63,7 @@ public class Simulator
         view = new SimulatorView(depth, width);
         view.setColor(Rabbit.class, Color.orange);
         view.setColor(Fox.class, Color.blue);
+        view.setColor(Zombie.class, Color.green);
         
         // Setup a valid starting point.
         reset();
@@ -135,6 +138,11 @@ public class Simulator
         field.clear();
         for(int row = 0; row < field.getDepth(); row++) {
             for(int col = 0; col < field.getWidth(); col++) {
+                if(rand.nextDouble() <= ZOMBIE_CREATION_PROBABILITY) {
+                    Location location = new Location(row, col);
+                    Zombie zombie = new Zombie(field, location);
+                    animals.add(zombie);
+                }
                 if(rand.nextDouble() <= FOX_CREATION_PROBABILITY) {
                     Location location = new Location(row, col);
                     Fox fox = new Fox(true, field, location);

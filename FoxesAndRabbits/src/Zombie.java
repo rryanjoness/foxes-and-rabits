@@ -31,13 +31,8 @@ public class Zombie extends Animal {
      * @param newFoxes A list to return newly born foxes.
      */
     public void act(List<Animal> newZombies){
-<<<<<<< Updated upstream
         incrementAge();
             if(isAlive()){
-=======
-        if(isAlive()){
-            incrementAge();
->>>>>>> Stashed changes
             Location brains = findBrains();
             if(brains != null){
                 newZombies.add(infect(brains));
@@ -54,14 +49,8 @@ public class Zombie extends Animal {
             }
             else{
                 willMove++;
-<<<<<<< Updated upstream
-            }
-            }
-=======
             }
         }
->>>>>>> Stashed changes
-
     }
 
     /**

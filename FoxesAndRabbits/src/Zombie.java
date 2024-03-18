@@ -9,7 +9,7 @@ public class Zombie extends Animal {
     // Zombies do not breed, they infect. Thus, breeding age is set to 0.
     private static final int BREEDING_AGE = 0;
     // The age to which a Zombie can live, they do not die, but eventually decompose.
-    private static final int MAX_AGE = 50;
+    private static final int MAX_AGE = 25;
     // Zombies will always successfully infect prey.
     private static final double BREEDING_PROBABILITY = 1;
     // Zombies can infect one animal at a time.
@@ -31,8 +31,13 @@ public class Zombie extends Animal {
      * @param newFoxes A list to return newly born foxes.
      */
     public void act(List<Animal> newZombies){
+<<<<<<< Updated upstream
         incrementAge();
             if(isAlive()){
+=======
+        if(isAlive()){
+            incrementAge();
+>>>>>>> Stashed changes
             Location brains = findBrains();
             if(brains != null){
                 newZombies.add(infect(brains));
@@ -49,8 +54,13 @@ public class Zombie extends Animal {
             }
             else{
                 willMove++;
+<<<<<<< Updated upstream
             }
             }
+=======
+            }
+        }
+>>>>>>> Stashed changes
 
     }
 

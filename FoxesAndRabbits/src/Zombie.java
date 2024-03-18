@@ -32,23 +32,25 @@ public class Zombie extends Animal {
      */
     public void act(List<Animal> newZombies){
         incrementAge();
-        Location brains = findBrains();
-        if(brains != null){
-            newZombies.add(infect(brains));
-        }
-
-        Location newLocation =  getField().freeAdjacentLocation(getLocation());
-        //check if zombie is able to move yet
-        if(willMove == 3){
-            // See if it was possible to move.
-            if(newLocation != null) {
-                setLocation(newLocation);
+            if(isAlive()){
+            Location brains = findBrains();
+            if(brains != null){
+                newZombies.add(infect(brains));
             }
-            willMove = 0;
-        }
-        else{
-            willMove++;
-        }
+
+            Location newLocation =  getField().freeAdjacentLocation(getLocation());
+            //check if zombie is able to move yet
+            if(willMove == 3){
+                // See if it was possible to move.
+                if(newLocation != null) {
+                    setLocation(newLocation);
+                }
+                willMove = 0;
+            }
+            else{
+                willMove++;
+            }
+            }
 
     }
 

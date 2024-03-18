@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
@@ -15,13 +16,19 @@ public class Zombie extends Animal {
     // Zombies can infect one animal at a time.
     private static final int MAX_LITTER_SIZE = 1;
 
-    private int willMove = 3;
+    private int willMove = 0;
     
     // A shared random number generator to control breeding.
     private static final Random rand = Randomizer.getRandom();
+
     
-    public Zombie(Field field, Location location){
-        super(field, location);
+    public Zombie(boolean randomAge, Field field, Location location){
+        
+        super(field, location, Color.green, 0.001);
+        if(randomAge) {
+            super.setAge(rand.nextInt(MAX_AGE));
+        }
+
     }
 
     /**
@@ -40,7 +47,7 @@ public class Zombie extends Animal {
 
             Location newLocation =  getField().freeAdjacentLocation(getLocation());
             //check if zombie is able to move yet
-            if(willMove == 3){
+            if(willMove == 6){
                 // See if it was possible to move.
                 if(newLocation != null) {
                     setLocation(newLocation);
@@ -82,7 +89,7 @@ public class Zombie extends Animal {
 
     private Animal infect(Location where){
         Field field = getField();
-        Zombie infected = new Zombie(field, where);
+        Zombie infected = new Zombie(false, field, where);
         return infected;
     }
 
@@ -117,6 +124,10 @@ public class Zombie extends Animal {
     protected int getMaxLitterSize(){
         return MAX_LITTER_SIZE;
     }
-    
+
+    public Animal makeAnimal(boolean randAge, Field field, Location location){
+        Animal zombie = new Zombie(randAge, field, location);
+        return zombie;
+    }
 
 }

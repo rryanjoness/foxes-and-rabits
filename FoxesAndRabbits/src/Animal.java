@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.util.List;
 import java.util.Random;
 
@@ -16,11 +17,19 @@ public abstract class Animal
     // The animal's position in the field.
     private Location location;
 
+    
+
     //the animal's age
     private int age;
 
     // A shared random number generator to control breeding.
     private static final Random rand = Randomizer.getRandom();
+
+    // The color to be displayed on the grid for this animal.
+    private Color color;
+
+    private double creationProbability;
+
     
     /**
      * Create a new animal at location in field.
@@ -28,11 +37,13 @@ public abstract class Animal
      * @param field The field currently occupied.
      * @param location The location within the field.
      */
-    public Animal(Field field, Location location)
+    public Animal(Field field, Location location, Color color, double creationProbability)
     {
         alive = true;
         this.field = field;
         setLocation(location);
+        this.color = color;
+        this.creationProbability = creationProbability;
 
         age= 0;
     }
@@ -170,4 +181,38 @@ public abstract class Animal
         }
         return births;
     }
+
+    /**
+     * Returns color for this animal
+     * @return Color for this animal
+     */
+    public Color getColor(){
+        return color;
+    }
+
+    public double getCreationProbability(){
+        return creationProbability;
+    }
+
+    abstract public Animal makeAnimal(boolean randAge, Field field, Location location);
+
+    /**
+     * Check whether or not this fox is to give birth at this step.
+     * New births will be made into free adjacent locations.
+     * @param newFoxes A list to return newly born foxes.
+     */
+    protected void giveBirth(List<Animal> newAnimals)
+    {
+        // New foxes are born into adjacent locations.
+        // Get a list of adjacent free locations.
+        Field field = getField();
+        List<Location> free = field.getFreeAdjacentLocations(getLocation());
+        int births = breed();
+        for(int b = 0; b < births && free.size() > 0; b++) {
+            Location loc = free.remove(0);
+            Animal newAnimal = makeAnimal(false, field, loc);
+            newAnimals.add(newAnimal);
+        }
+    }
+
 }

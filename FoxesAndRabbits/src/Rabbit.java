@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.util.List;
 import java.util.Random;
 
@@ -37,8 +38,8 @@ public class Rabbit extends Animal
      */
     public Rabbit(boolean randomAge, Field field, Location location)
     {
-        super(field, location);
-         super.setAge(0);
+        super(field, location, Color.orange, 0.08);
+        super.setAge(0);
         if(randomAge) {
             super.setAge(rand.nextInt(MAX_AGE));
         }
@@ -65,28 +66,6 @@ public class Rabbit extends Animal
             }
         }
     }
-
-
-    /**
-     * Check whether or not this rabbit is to give birth at this step.
-     * New births will be made into free adjacent locations.
-     * @param newRabbits A list to return newly born rabbits.
-     */
-    private void giveBirth(List<Animal> newRabbits)
-    {
-        // New rabbits are born into adjacent locations.
-        // Get a list of adjacent free locations.
-        Field field = getField();
-        List<Location> free = field.getFreeAdjacentLocations(getLocation());
-        int births = breed();
-        for(int b = 0; b < births && free.size() > 0; b++) {
-            Location loc = free.remove(0);
-            Rabbit young = new Rabbit(false, field, loc);
-            newRabbits.add(young);
-        }
-    }
-        
-
 
     /**
      *  Return the breeding age of this animal. 
@@ -118,5 +97,10 @@ public class Rabbit extends Animal
      */
     protected int getMaxLitterSize(){
         return MAX_LITTER_SIZE;
+    }
+
+    public Animal makeAnimal(boolean randAge, Field field, Location location){
+        Animal rabbit = new Rabbit(randAge, field, location);
+        return rabbit;
     }
 }

@@ -2,7 +2,6 @@ import java.util.Random;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.awt.Color;
 
 /**
  * A simple predator-prey simulator, based on a rectangular field
@@ -18,12 +17,7 @@ public class Simulator
     private static final int DEFAULT_WIDTH = 120;
     // The default depth of the grid.
     private static final int DEFAULT_DEPTH = 80;
-    // The probability that a fox will be created in any given grid position.
-    private static final double FOX_CREATION_PROBABILITY = 0.02;
-    // The probability that a rabbit will be created in any given grid position.
-    private static final double RABBIT_CREATION_PROBABILITY = 0.08;    
-    // The probability that a zombie will be created in any given grid position.
-    private static final double ZOMBIE_CREATION_PROBABILITY = 0.001;
+
 
     // List of animals in the field.
     private List<Animal> animals;
@@ -33,13 +27,16 @@ public class Simulator
     private int step;
     // A graphical view of the simulation.
     private SimulatorView view;
+
+    private List<Animal> animalList = new ArrayList<Animal>();
     
     /**
      * Construct a simulation field with default size.
      */
-    public Simulator()
+    public Simulator(List<Animal> animalList)
     {
-        this(DEFAULT_DEPTH, DEFAULT_WIDTH);
+        this(DEFAULT_DEPTH, DEFAULT_WIDTH, animalList);
+        
     }
     
     /**
@@ -47,8 +44,9 @@ public class Simulator
      * @param depth Depth of the field. Must be greater than zero.
      * @param width Width of the field. Must be greater than zero.
      */
-    public Simulator(int depth, int width)
+    public Simulator(int depth, int width, List<Animal> animalList)
     {
+        this.animalList = animalList;
         if(width <= 0 || depth <= 0) {
             System.out.println("The dimensions must be greater than zero.");
             System.out.println("Using default values.");
@@ -61,9 +59,6 @@ public class Simulator
 
         // Create a view of the state of each location in the field.
         view = new SimulatorView(depth, width);
-        view.setColor(Rabbit.class, Color.orange);
-        view.setColor(Fox.class, Color.blue);
-        view.setColor(Zombie.class, Color.green);
         
         // Setup a valid starting point.
         reset();
@@ -130,30 +125,21 @@ public class Simulator
     }
     
     /**
-     * Randomly populate the field with foxes and rabbits.
+     * Randomly populate the field with foxes, zombies and rabbits.
      */
     private void populate()
     {
-        Random rand = Randomizer.getRandom();
         field.clear();
+        Random rand = Randomizer.getRandom();
         for(int row = 0; row < field.getDepth(); row++) {
             for(int col = 0; col < field.getWidth(); col++) {
-                if(rand.nextDouble() <= ZOMBIE_CREATION_PROBABILITY) {
-                    Location location = new Location(row, col);
-                    Zombie zombie = new Zombie(field, location);
-                    animals.add(zombie);
+                for(int i = 0; i < animalList.size(); i++){
+                    Animal animal = animalList.get(i);
+                    if(rand.nextDouble() <= animal.getCreationProbability()){
+                        Location location = new Location(row, col);
+                        animals.add(animal.makeAnimal(true, field, location));
+                    }
                 }
-                if(rand.nextDouble() <= FOX_CREATION_PROBABILITY) {
-                    Location location = new Location(row, col);
-                    Fox fox = new Fox(true, field, location);
-                    animals.add(fox);
-                }
-                else if(rand.nextDouble() <= RABBIT_CREATION_PROBABILITY) {
-                    Location location = new Location(row, col);
-                    Rabbit rabbit = new Rabbit(true, field, location);
-                    animals.add(rabbit);
-                }
-                // else leave the location empty.
             }
         }
     }

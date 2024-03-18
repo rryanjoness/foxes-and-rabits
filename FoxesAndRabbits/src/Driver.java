@@ -1,9 +1,15 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 public class Driver {
 
+     private static List<Animal> animalList = new ArrayList<Animal>();
 	public static void main(String[] args) {
-		Simulator mySim = new Simulator();
+        makeAnimalList();
+        Simulator mySim = new Simulator(animalList);
+        
 
 		char choice;
 		Scanner sc = new Scanner(System.in);
@@ -12,7 +18,22 @@ public class Driver {
 			takeAction(choice, mySim);
 		} while (choice != 'X');
 	}
-	
+
+    private static void makeAnimalList(){
+        
+        Field fakeField = new Field(2, 2);
+        Location fakeLocation = new Location(1, 1);
+
+
+        Animal zombie = new Zombie(true, fakeField, fakeLocation);
+        Animal fox = new Fox(true, fakeField, fakeLocation);
+        Animal rabbit = new Rabbit(true, fakeField, fakeLocation);
+
+        animalList.add(zombie);
+        animalList.add(fox);
+        animalList.add(rabbit);
+    }
+
 	private static char getOption(Scanner sc) {
 		System.out.println("Enter a menu option");
 		System.out.println(" R. Reset the simulation");
@@ -54,5 +75,6 @@ public class Driver {
 			System.out.println("Goodbye.");
 			break;
 		}
-	}
+    }
+    
 }

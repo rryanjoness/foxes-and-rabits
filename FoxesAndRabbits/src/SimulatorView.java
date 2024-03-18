@@ -27,8 +27,7 @@ public class SimulatorView extends JFrame
     private JLabel stepLabel, population;
     private FieldView fieldView;
     
-    // A map for storing colors for participants in the simulation
-    private Map<Class, Color> colors;
+
     // A statistics object computing and storing simulation information
     private FieldStats stats;
 
@@ -40,7 +39,6 @@ public class SimulatorView extends JFrame
     public SimulatorView(int height, int width)
     {
         stats = new FieldStats();
-        colors = new LinkedHashMap<Class, Color>();
 
         setTitle("Fox and Rabbit Simulation");
         stepLabel = new JLabel(STEP_PREFIX, JLabel.CENTER);
@@ -58,30 +56,6 @@ public class SimulatorView extends JFrame
         setVisible(true);
     }
     
-    /**
-     * Define a color to be used for a given class of animal.
-     * @param animalClass The animal's Class object.
-     * @param color The color to be used for the given class.
-     */
-    public void setColor(Class animalClass, Color color)
-    {
-        colors.put(animalClass, color);
-    }
-
-    /**
-     * @return The color to be used for a given class of animal.
-     */
-    private Color getColor(Class animalClass)
-    {
-        Color col = colors.get(animalClass);
-        if(col == null) {
-            // no color defined for this class
-            return UNKNOWN_COLOR;
-        }
-        else {
-            return col;
-        }
-    }
 
     /**
      * Show the current status of the field.
@@ -104,7 +78,7 @@ public class SimulatorView extends JFrame
                 Object animal = field.getObjectAt(row, col);
                 if(animal != null) {
                     stats.incrementCount(animal.getClass());
-                    fieldView.drawMark(col, row, getColor(animal.getClass()));
+                    fieldView.drawMark(col, row, ((Animal)animal).getColor());
                 }
                 else {
                     fieldView.drawMark(col, row, EMPTY_COLOR);

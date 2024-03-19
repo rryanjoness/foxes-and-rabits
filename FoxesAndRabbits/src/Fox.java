@@ -159,7 +159,7 @@ public class Fox extends Animal
      * creates a new Animal of the type Fox
      * @return the new Fox
      */
-    public Animal makeAnimal(boolean randAge, Field field, Location location){
+    protected Animal makeAnimal(boolean randAge, Field field, Location location){
         Animal fox = new Fox(randAge, field, location);
         return fox;
     }

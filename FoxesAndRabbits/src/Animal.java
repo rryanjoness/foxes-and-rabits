@@ -204,7 +204,7 @@ public abstract class Animal
     /*
      * creates a new Animal of the subclass' type
      */
-    abstract public Animal makeAnimal(boolean randAge, Field field, Location location);
+    abstract protected Animal makeAnimal(boolean randAge, Field field, Location location);
 
     /**
      * Check whether or not this animal is to give birth at this step.

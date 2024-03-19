@@ -28,6 +28,7 @@ public abstract class Animal
     // The color to be displayed on the grid for this animal.
     private Color color;
 
+    //The probability of the Animal to be swpaned on reset (in Simulator)
     private double creationProbability;
 
     
@@ -36,6 +37,8 @@ public abstract class Animal
      * 
      * @param field The field currently occupied.
      * @param location The location within the field.
+     * @param color The color that this Animal will display on the Simulator
+     * @param creationProbabilty The probabilty that this Animal will be spawned at any given space on the grid at reset
      */
     public Animal(Field field, Location location, Color color, double creationProbability)
     {
@@ -190,16 +193,23 @@ public abstract class Animal
         return color;
     }
 
+    /**
+     * Returns creation probabilty for this Animal
+     * @return creation probability for this Animal
+     */
     public double getCreationProbability(){
         return creationProbability;
     }
 
+    /*
+     * creates a new Animal of the subclass' type
+     */
     abstract public Animal makeAnimal(boolean randAge, Field field, Location location);
 
     /**
-     * Check whether or not this fox is to give birth at this step.
+     * Check whether or not this animal is to give birth at this step.
      * New births will be made into free adjacent locations.
-     * @param newFoxes A list to return newly born foxes.
+     * @param newAnimals A list to return newly born animals.
      */
     protected void giveBirth(List<Animal> newAnimals)
     {

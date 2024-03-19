@@ -28,6 +28,7 @@ public class Simulator
     // A graphical view of the simulation.
     private SimulatorView view;
 
+    //list of existing animals
     private List<Animal> animalList = new ArrayList<Animal>();
     
     /**
@@ -131,12 +132,15 @@ public class Simulator
     {
         field.clear();
         Random rand = Randomizer.getRandom();
+        //iterates through each sqare of the grid
         for(int row = 0; row < field.getDepth(); row++) {
             for(int col = 0; col < field.getWidth(); col++) {
+                //iterate through list of existing animal subclasses, provided from Driver.java
                 for(int i = 0; i < animalList.size(); i++){
                     Animal animal = animalList.get(i);
                     if(rand.nextDouble() <= animal.getCreationProbability()){
                         Location location = new Location(row, col);
+                        //abstract method class to create new animal add to animal list
                         animals.add(animal.makeAnimal(true, field, location));
                     }
                 }

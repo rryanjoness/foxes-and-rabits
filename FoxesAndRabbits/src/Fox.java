@@ -155,6 +155,10 @@ public class Fox extends Animal
         return MAX_LITTER_SIZE;
     }
 
+    /**
+     * creates a new Animal of the type Fox
+     * @return the new Fox
+     */
     public Animal makeAnimal(boolean randAge, Field field, Location location){
         Animal fox = new Fox(randAge, field, location);
         return fox;

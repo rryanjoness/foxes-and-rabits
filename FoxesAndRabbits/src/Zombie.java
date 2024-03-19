@@ -5,7 +5,7 @@ import java.util.Random;
 
 public class Zombie extends Animal {
     
-    // Characteristics shared by all foxes (class variables).
+    // Characteristics shared by all zombies (class variables).
     
     // Zombies do not breed, they infect. Thus, breeding age is set to 0.
     private static final int BREEDING_AGE = 0;
@@ -87,6 +87,11 @@ public class Zombie extends Animal {
         return null;
     }
 
+    
+    /**
+     * puts new Zombie in the place of the infected Animal (replaces animal with a zombie, or 'infects' the animal)
+     * @return the new Zombie
+     */
     private Animal infect(Location where){
         Field field = getField();
         Zombie infected = new Zombie(false, field, where);
@@ -125,6 +130,11 @@ public class Zombie extends Animal {
         return MAX_LITTER_SIZE;
     }
 
+    
+    /**
+     * creates a new Animal of the type Zombie
+     * @return the new Zombie
+     */
     public Animal makeAnimal(boolean randAge, Field field, Location location){
         Animal zombie = new Zombie(randAge, field, location);
         return zombie;

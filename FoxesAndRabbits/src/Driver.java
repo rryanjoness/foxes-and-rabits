@@ -19,16 +19,19 @@ public class Driver {
 		} while (choice != 'X');
 	}
 
+    //creates one of each animal to add to list to be passed to Simulator.java
     private static void makeAnimalList(){
         
+        //fake field and location, used to create one of each "fake" animal
         Field fakeField = new Field(2, 2);
         Location fakeLocation = new Location(1, 1);
 
-
+        //creates new animals for method calling later (in simulator)
         Animal zombie = new Zombie(true, fakeField, fakeLocation);
         Animal fox = new Fox(true, fakeField, fakeLocation);
         Animal rabbit = new Rabbit(true, fakeField, fakeLocation);
 
+        //adds new animals to the list of animal types
         animalList.add(zombie);
         animalList.add(fox);
         animalList.add(rabbit);

@@ -103,7 +103,7 @@ public class Rabbit extends Animal
      * creates a new Animal of the type Rabbit
      * @return the new Rabbit
      */
-    protected Animal makeAnimal(boolean randAge, Field field, Location location){
+    public Animal makeAnimal(boolean randAge, Field field, Location location){
         Animal rabbit = new Rabbit(randAge, field, location);
         return rabbit;
     }

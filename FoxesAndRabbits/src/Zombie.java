@@ -135,7 +135,7 @@ public class Zombie extends Animal {
      * creates a new Animal of the type Zombie
      * @return the new Zombie
      */
-    protected Animal makeAnimal(boolean randAge, Field field, Location location){
+    public Animal makeAnimal(boolean randAge, Field field, Location location){
         Animal zombie = new Zombie(randAge, field, location);
         return zombie;
     }

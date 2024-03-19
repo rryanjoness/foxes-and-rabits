@@ -47,7 +47,7 @@ public class Zombie extends Animal {
 
             Location newLocation =  getField().freeAdjacentLocation(getLocation());
             //check if zombie is able to move yet
-            if(willMove == 6){
+            if(willMove == 10){
                 // See if it was possible to move.
                 if(newLocation != null) {
                     setLocation(newLocation);
